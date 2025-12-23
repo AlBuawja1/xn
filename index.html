@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظومة جمعية عيت بوعوجه وفيات</title>
+    
+    <style>
+        :root {
+            --primary-grad: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --btn-grad: linear-gradient(to right, #da22ff, #9733ee);
+            --bg-color: #f8f9fa;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .main-card {
+            background: white;
+            width: 95%;
+            max-width: 600px;
+            padding: 40px 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 6px solid #ffffff;
+        }
+        .header-logo { width: 70px; margin-bottom: 15px; }
+
+        h2 { color: #333; margin: 10px 0 5px 0; font-size: 24px; font-weight: 800; }
+        .sub-title { 
+            color: #764ba2; 
+            margin-bottom: 30px; 
+            font-size: 20px; 
+            font-weight: bold;
+            display: block; 
+        }
+        
+        .search-area { background: #fdfbff; padding: 20px; border-radius: 20px; margin-bottom: 20px; }
+        
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 18px;
+            outline: none;
+            box-sizing: border-box;
+            text-align: center;
+            background: #fff;
+            color: #000000; 
+            font-weight: 900; 
+        }
+        
+        button {
+            background: var(--btn-grad);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        button:active { transform: scale(0.98); }
+
+        .result-box {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+            border: 2px solid #764ba2;
+            text-align: right;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .data-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; align-items: center; }
+        .label { color: #666; font-size: 14px; }
+        .value-name { color: #000; font-weight: 900; font-size: 18px; } 
+        .value { color: #333; font-weight: bold; }
+        .success { color: #27ae60; font-weight: bold; }
+
+        .msg-footer { margin-top: 25px; color: #764ba2; font-weight: bold; }
+        .designer-tag {
+            background: var(--btn-grad);
+            color: white;
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 50px;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-card">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png" class="header-logo">
+    
+    <h2>استعلام عن السهم السنوي لعام 2025</h2>
+    <div class="sub-title">جمعية عيت بوعوجه وفيات</div>
+
+    <div class="search-area">
+        <input type="text" id="nameInput" placeholder="أدخل اسم العضو أو كلمة (إجمالي)">
+        <button onclick="doSearch()">🔍 بحــث الآن</button>
+    </div>
+
+    <div id="result" class="result-box"></div>
+
+    <p class="msg-footer">" مع تحيات إدارة الجمعية "</p>
+    <div class="designer-tag">تـصميم وبرمجـة: عبدالمالك عطية</div>
+</div>
+
+<script>
+    const members = [
+        {n: "جمال صالح رافالله", p: 240, d: "2025-12-18"},
+        {n: "ابراهيم جمعه بوحويه", p: 120, d: "2025-08-22"},
+        {n: "احمد جبريل عبدالمالك", p: 120, d: "2025-08-22"},
+        {n: "احمد جمعه بوحويه", p: 120, d: "2025-08-22"},
+        {n: "احميده فرج عبدالغني", p: 120, d: "2025-08-29"},
+        {n: "الصادق عبدالمالك عطيه", p: 120, d: "2025-08-22"},
+        {n: "المنتصر الصادق عبدالمالك", p: 120, d: "2025-08-22"},
+        {n: "ايمن صالح رافالله", p: 120, d: "2025-09-30"},
+        {n: "بشار صلاح جبريل", p: 120, d: "2025-08-24"},
+        {n: "جبريل صلاح جبريل", p: 120, d: "2025-08-24"},
+        {n: "جبريل فرج امراجع", p: 120, d: "2025-09-01"},
+        {n: "جمعه بوحويه الصلحين", p: 120, d: "2025-08-22"},
+        {n: "حسين صلاح جبريل", p: 120, d: "2025-08-24"},
+        {n: "حفيظ جبريل عبدالمالك", p: 120, d: "2025-08-25"},
+        {n: "حفيظ محمد رافالله", p: 120, d: "2025-08-30"},
+        {n: "حميد جبريل عبدالمالك", p: 120, d: "2025-08-25"},
+        {n: "خالد الصادق عبدالمالك", p: 120, d: "2025-08-22"},
+        {n: "خالد عبدالعاطي المقطوش", p: 120, d: "2025-12-14"},
+        {n: "خليل صلاح جبريل", p: 120, d: "2025-08-24"},
+        {n: "زايد فرج امراجع", p: 120, d: "2025-09-02"},
+        {n: "زكريه حفيظ جبريل", p: 120, d: "2025-08-25"},
+        {n: "سالم جبريل عبدالمالك", p: 120, d: "2025-08-25"},
+        {n: "سالم محمد عبدالمالك", p: 120, d: "2025-08-23"},
+        {n: "سعد عبدالعاطي المقطوش", p: 120, d: "2025-12-14"},
+        {n: "صلاح جبريل عبدالمالك", p: 120, d: "2025-08-24"},
+        {n: "طه عطيه جبريل", p: 120, d: "2025-08-22"},
+        {n: "عادل جبريل عبدالمالك", p: 120, d: "2025-08-25"},
+        {n: "عاشور فرج امراجع", p: 120, d: "2025-09-01"},
+        {n: "عامر صلاح جبريل", p: 120, d: "2025-08-24"},
+        {n: "عبد الوهاب محمد عبدالمالك", p: 120, d: "2025-08-23"},
+        {n: "عبدالرحمن محمد عبدالمالك", p: 120, d: "2025-08-23"},
+        {n: "عبدالسلام فرج عبدالغني", p: 120, d: "2025-08-29"},
+        {n: "عبدالمالك محمد عبدالمالك", p: 120, d: "2025-08-23"},
+        {n: "عطيه جبريل عبدالمالك", p: 120, d: "2025-08-22"},
+        {n: "عطيه فرج امراجع", p: 120, d: "2025-10-02"},
+        {n: "فتاح سالم جبريل", p: 120, d: "2025-08-25"},
+        {n: "فرج محمد بوعوجه", p: 120, d: "2025-08-29"},
+        {n: "كريم سالم جبريل", p: 120, d: "2025-08-25"},
+        {n: "محمد عبدالرازق الناجي", p: 120, d: "2025-08-31"},
+        {n: "محمد عبدالمالك عطيه", p: 120, d: "2025-08-23"},
+        {n: "محمد عطيه جبريل", p: 120, d: "2025-08-22"},
+        {n: "محمود فرج امراجع", p: 120, d: "2025-09-28"},
+        {n: "مهند الصادق عبدالمالك", p: 120, d: "2025-08-22"},
+        {n: "نافع صالح رافالله", p: 120, d: "2025-09-30"}
+    ];
+
+    function doSearch() {
+        const inputVal = document.getElementById('nameInput').value.trim();
+        const box = document.getElementById('result');
+        
+        if(!inputVal) return;
+
+        // --- أولاً: ميزة عرض الإحصائيات العامة ---
+        if(inputVal === "إجمالي" || inputVal === "اجمالي") {
+            const totalCount = members.length;
+            const totalPrice = members.reduce((acc, curr) => acc + curr.p, 0);
+            const today = new Date().toLocaleDateString('ar-LY', {
+                year: 'numeric', month: 'long', day: 'numeric'
+            });
+
+            box.innerHTML = `
+                <div style="text-align:center; color:#764ba2; font-weight:bold; border-bottom:2px solid #eee; margin-bottom:10px; padding-bottom:5px;">📊 تقرير الجمعية العام</div>
+                <div class="data-row"><span class="label">عدد المشتركين:</span><span class="value">${totalCount} مشترك</span></div>
+                <div class="data-row"><span class="label">إجمالي المبالغ:</span><span class="value" style="color:#27ae60;">${totalPrice} د.ل</span></div>
+                <div class="data-row"><span class="label">تاريخ اليوم:</span><span class="value">${today}</span></div>
+            `;
+            box.style.display = "block";
+            return;
+        }
+
+        // --- ثانياً: ميزة البحث عن عضو ---
+        const words = inputVal.split(/\s+/);
+        if(words.length < 2) {
+            alert("يرجى كتابة اسمين على الأقل للبحث.");
+            box.style.display = "none";
+            return;
+        }
+
+        // تنظيف النصوص لتسهيل المطابقة (تجاهل الهمزات)
+        const normalize = (text) => text.replace(/[أإآا]/g, 'ا').replace(/ة/g, 'ه').replace(/\s+/g, '');
+        const searchNorm = normalize(inputVal);
+
+        const found = members.find(m => normalize(m.n).includes(searchNorm));
+
+        if(found) {
+            box.innerHTML = `
+                <div class="data-row"><span class="label">اسم المشترك:</span><span class="value-name">${found.n}</span></div>
+                <div class="data-row"><span class="label">إجمالي الرصيد:</span><span class="value">${found.p} د.ل</span></div>
+                <div class="data-row"><span class="label">حالة الاشتراك:</span><span class="success">مخلص لعام 2025 ✅</span></div>
+                <div class="data-row"><span class="label">تاريخ السداد:</span><span class="value">${found.d}</span></div>
+            `;
+            box.style.display = "block";
+        } else {
+            alert("عذراً، هذا الاسم غير مدرج.");
+            box.style.display = "none";
+        }
+    }
+
+    // دعم زر Enter للبحث
+    document.getElementById('nameInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') doSearch();
+    });
+</script>
+
+</body>
+</html>
