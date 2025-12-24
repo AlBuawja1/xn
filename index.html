@@ -9,7 +9,7 @@
         :root {
             --primary-grad: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --btn-grad: linear-gradient(to right, #da22ff, #9733ee);
-            --bg-color: #f8f9fa;
+            --bg-color: #f0f2f5;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -22,40 +22,39 @@
         }
         .main-card {
             background: white;
-            width: 95%;
-            max-width: 600px;
-            padding: 40px 30px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
             border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             text-align: center;
-            border: 6px solid #ffffff;
+            border: 4px solid #fff;
         }
-        .header-logo { width: 70px; margin-bottom: 15px; }
+        .header-logo { width: 80px; margin-bottom: 10px; }
 
-        h2 { color: #333; margin: 10px 0 5px 0; font-size: 24px; font-weight: 800; }
+        h2 { color: #333; margin: 10px 0 5px 0; font-size: 22px; font-weight: 800; }
         .sub-title { 
             color: #764ba2; 
-            margin-bottom: 30px; 
-            font-size: 20px; 
+            margin-bottom: 25px; 
+            font-size: 18px; 
             font-weight: bold;
             display: block; 
         }
         
-        .search-area { background: #fdfbff; padding: 20px; border-radius: 20px; margin-bottom: 20px; }
+        .search-area { background: #f8f9fa; padding: 20px; border-radius: 20px; border: 1px solid #eee; }
         
         input {
             width: 100%;
             padding: 15px;
-            border: 2px solid #ddd;
+            border: 2px solid #e0e0e0;
             border-radius: 12px;
-            font-size: 18px;
+            font-size: 16px;
             outline: none;
             box-sizing: border-box;
             text-align: center;
-            background: #fff;
-            color: #000; 
-            font-weight: 900; 
+            font-weight: bold;
         }
+        input:focus { border-color: #764ba2; }
         
         button {
             background: var(--btn-grad);
@@ -64,13 +63,12 @@
             padding: 14px;
             border-radius: 12px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: bold;
             width: 100%;
-            margin-top: 10px;
+            margin-top: 15px;
             transition: 0.3s;
         }
-        button:hover { opacity: 0.9; }
 
         .result-box {
             background: #fff;
@@ -80,30 +78,28 @@
             display: none;
             border: 2px solid #764ba2;
             text-align: right;
-            animation: fadeIn 0.4s ease-out;
+            animation: slideUp 0.4s ease-out;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .data-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; align-items: center; }
-        .label { color: #666; font-size: 14px; }
-        .value-name { color: #000; font-weight: 900; font-size: 18px; } 
-        .value { color: #333; font-weight: bold; }
-        .success { color: #27ae60; font-weight: bold; }
-        .failed { color: #e74c3c; font-weight: bold; }
-        .clear-status { background: #f1f1f1; color: #555; padding: 3px 10px; border-radius: 10px; font-size: 14px; }
+        .data-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f0f0f0; align-items: center; }
+        .label { color: #777; font-size: 14px; }
+        .value-name { color: #2c3e50; font-weight: 900; font-size: 18px; } 
+        .success { color: #27ae60; font-weight: bold; background: #ebfaef; padding: 4px 10px; border-radius: 8px; }
+        .failed { color: #e74c3c; font-weight: bold; background: #fdf2f2; padding: 4px 10px; border-radius: 8px; }
+        .warning-msg { color: #856404; background: #fff3cd; padding: 15px; border-radius: 12px; font-weight: bold; border: 1px solid #ffeeba; }
 
-        .msg-footer { margin-top: 25px; color: #764ba2; font-weight: bold; }
         .designer-tag {
-            background: var(--btn-grad);
-            color: white;
+            background: #eee;
+            color: #666;
             display: inline-block;
-            padding: 6px 20px;
+            padding: 5px 15px;
             border-radius: 50px;
             margin-top: 15px;
-            font-size: 13px;
+            font-size: 11px;
         }
     </style>
 </head>
@@ -111,25 +107,22 @@
 
 <div class="main-card">
     <img src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png" class="header-logo">
-    
-    <h2>استعلام عن السهم السنوي لعام 2025</h2>
+    <h2>استعلام عن السهم السنوي 2025</h2>
     <div class="sub-title">جمعية عيت بوعوجه </div>
 
     <div class="search-area">
-        <input type="text" id="nameInput" placeholder="ادخل اسم عضو للبحث او كلمه إجمالي">
-        <button onclick="doSearch()">🔍 بحــث الآن</button>
+        <input type="text" id="nameInput" placeholder="ادخل اسم عضو او كلمه إجمالي ">
+        <button onclick="doSearch()">🔍 ابحث الآن</button>
     </div>
 
     <div id="result" class="result-box"></div>
 
-    <p class="msg-footer">" مع تحيات إدارة الجمعية "</p>
-    <div class="designer-tag">تـصميم وبرمجـة: عبدالمالك عطية</div>
+    <div class="designer-tag">برمجـة: عبدالمالك عطية</div>
 </div>
 
 <script>
-    // قاعدة البيانات المحدثة
+    // قاعدة البيانات (نفس البيانات السابقة)
     const members = [
-        // القائمة السابقة (مسددون)
         {n: "جمال صالح رافالله", p: 240, d: "2025-12-18", s: "خلاص لعام 2025 و 2026 ✅", paid: true},
         {n: "ابراهيم جمعه بوحويه", p: 120, d: "2025-08-22", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "احمد جبريل عبدالمالك", p: 120, d: "2025-08-22", s: "خلاص لعام 2025 ✅", paid: true},
@@ -141,7 +134,7 @@
         {n: "بشار صلاح جبريل", p: 120, d: "2025-08-24", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "جبريل صلاح جبريل", p: 120, d: "2025-08-24", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "جبريل فرج امراجع", p: 120, d: "2025-09-01", s: "خلاص لعام 2025 ✅", paid: true},
-        {n: "جمعه بوحويه الصالحين", p: 120, d: "2025-08-22", s: "خلاص لعام 2025 ✅", paid: true},
+        {n: "جمعه بوحويه الصالحين", p: 120,d: "2025-08-22", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "حسين صلاح جبريل", p: 120, d: "2025-08-24", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "حفيظ جبريل عبدالمالك", p: 120, d: "2025-08-25", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "حفيظ محمد رافالله", p: 120, d: "2025-08-30", s: "خلاص لعام 2025 ✅", paid: true},
@@ -174,8 +167,6 @@
         {n: "محمود فرج امراجع", p: 120, d: "2025-09-28", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "مهند الصادق عبدالمالك", p: 120, d: "2025-08-22", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "نافع صالح رافالله", p: 120, d: "2025-09-30", s: "خلاص لعام 2025 ✅", paid: true},
-
-        // القائمة الجديدة (غير مسددين - 0 د.ل)
         {n: "فرج الناجي الصالحين", p: 0, d: "2025-01-01", s: "لم يتم السداد لعام 2025 ❌", paid: false},
         {n: "عبدالعزيز الناجي الصالحين", p: 0, d: "2025-01-01", s: "لم يتم السداد لعام 2025 ❌", paid: false},
         {n: "عبدالغني الناجي الصالحين", p: 0, d: "2025-01-01", s: "لم يتم السداد لعام 2025 ❌", paid: false},
@@ -224,42 +215,47 @@
         const inputVal = document.getElementById('nameInput').value.trim();
         const box = document.getElementById('result');
         
-        if(!inputVal) return;
+        if(!inputVal) {
+            box.style.display = "none";
+            return;
+        }
 
-        // ميزة البحث بكلمة (إجمالي)
+        // استثناء لكلمة إجمالي
         if(inputVal === "إجمالي" || inputVal === "اجمالي") {
-            const totalCount = members.length;
             const totalPrice = members.reduce((acc, curr) => acc + curr.p, 0);
-            const today = new Date().toLocaleDateString('ar-LY', {
-                year: 'numeric', month: 'long', day: 'numeric'
-            });
-
-            box.innerHTML = `
-                <div style="text-align:center; color:#764ba2; font-weight:bold; border-bottom:2px solid #eee; margin-bottom:10px; padding-bottom:5px;">📊 التقرير العام للجمعية</div>
-                <div class="data-row"><span class="label">عدد المسجلين كلياً:</span><span class="value">${totalCount} مشترك</span></div>
-                <div class="data-row"><span class="label">إجمالي المبالغ بالخزينة:</span><span class="value" style="color:#27ae60;">${totalPrice} د.ل</span></div>
-                <div class="data-row"><span class="label">تاريخ التقرير:</span><span class="value">${today}</span></div>
-            `;
+            box.innerHTML = `<div class="data-row"><span class="label">إجمالي الصندوق:</span><span class="value" style="color:green">${totalPrice} د.ل</span></div>`;
             box.style.display = "block";
             return;
         }
 
-        // البحث العادي
-        const normalize = (text) => text.replace(/[أإآا]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, '');
+        // التعديل المطلوب: التأكد من كتابة اسم ثنائي على الأقل
+        const nameParts = inputVal.split(/\s+/);
+        if (nameParts.length < 2) {
+            box.innerHTML = `<div class="warning-msg">⚠️ يرجى كتابة الاسم الأول والثاني (مثلاً: محمد علي) لتتم عملية البحث بدقة.</div>`;
+            box.style.display = "block";
+            return;
+        }
+
+        const normalize = (text) => text
+            .replace(/[أإآا]/g, 'ا')
+            .replace(/ة/g, 'ه')
+            .replace(/ى/g, 'ي')
+            .replace(/\s+/g, '');
+
         const searchNorm = normalize(inputVal);
         const found = members.find(m => normalize(m.n).includes(searchNorm));
 
         if(found) {
             const statusClass = found.paid ? "success" : "failed";
             box.innerHTML = `
-                <div class="data-row"><span class="label">اسم المشترك:</span><span class="value-name">${found.n}</span></div>
-                <div class="data-row"><span class="label">إجمالي المسدد:</span><span class="value">${found.p} د.ل</span></div>
-                <div class="data-row"><span class="label">حالة السداد:</span><span class="${statusClass}">${found.s}</span></div>
-                <div class="data-row"><span class="label">تاريخ آخر سداد:</span><span class="value">${found.d}</span></div>
+                <div class="data-row"><span class="label">اسم العضو:</span><span class="value-name">${found.n}</span></div>
+                <div class="data-row"><span class="label">المسدد:</span><span class="value">${found.p} د.ل</span></div>
+                <div class="data-row"><span class="label">الحالة:</span><span class="${statusClass}">${found.s}</span></div>
+                <div class="data-row"><span class="label">تاريخ السداد:</span><span class="value">${found.d}</span></div>
             `;
             box.style.display = "block";
         } else {
-            box.innerHTML = `<div style="color:red; text-align:center; padding:10px; font-weight:bold;">❌ العضو غير مسجل بالمنظومة</div>`;
+            box.innerHTML = `<div style="color:#e74c3c; text-align:center; padding:15px; font-weight:bold;">❌ العضو غير مسجل، تأكد من كتابة الاسم بشكل صحيح.</div>`;
             box.style.display = "block";
         }
     }
