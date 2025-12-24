@@ -44,9 +44,20 @@
         .success { color: #27ae60; font-weight: bold; background: #ebfaef; padding: 4px 10px; border-radius: 8px; }
         .failed { color: #e74c3c; font-weight: bold; background: #fdf2f2; padding: 4px 10px; border-radius: 8px; }
         
+        /* تنسيق رسالة التحذير */
+        .warning-msg {
+            color: #856404;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.6;
+        }
+
         .total-header { text-align: center; color: #764ba2; font-weight: bold; border-bottom: 2px solid #eee; margin-bottom: 10px; padding-bottom: 10px; }
 
-        /* التعديل المطلوب: حقوق التصميم بنفس لون زر البحث */
         .designer-credit {
             margin-top: 25px;
             font-size: 14px;
@@ -66,7 +77,7 @@
     <div class="sub-title">جمعية عيت بوعوجه </div>
 
     <div class="search-area">
-        <input type="text" id="nameInput" placeholder="ادخل اسم عضو او كلمه إجمالي">
+        <input type="text" id="nameInput" placeholder="ادخل الاسم عضو او كلمه إجمالي">
         <button onclick="doSearch()">🔍 ابحث الآن</button>
     </div>
 
@@ -97,7 +108,7 @@
         {n: "خالد عبدالعاطي المقطوش", p: 120, d: "2025-12-14", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "خليل صلاح جبريل", p: 120, d: "2025-08-24", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "زايد فرج امراجع", p: 120, d: "2025-09-02", s: "خلاص لعام 2025 ✅", paid: true},
-        {n: "زكريا حفيظ جبريل", p: 120, d: "2025-08-25", s: "خلاص لعام 2025 ✅", paid: true},
+        {n: "زكريا حفيظ جبريل ", p: 120, d: "2025-08-25", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "سالم جبريل عبدالمالك", p: 120, d: "2025-08-25", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "سالم محمد عبدالمالك", p: 120, d: "2025-08-23", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "سعد عبدالعاطي المقطوش", p: 120, d: "2025-12-14", s: "خلاص لعام 2025 ✅", paid: true},
@@ -168,8 +179,14 @@
     function doSearch() {
         const inputVal = document.getElementById('nameInput').value.trim();
         const box = document.getElementById('result');
-        if(!inputVal) { box.style.display = "none"; return; }
+        
+        // إذا كان الحقل فارغاً
+        if(!inputVal) { 
+            box.style.display = "none"; 
+            return; 
+        }
 
+        // 1. فحص إذا كان المطلوب هو التقرير الإجمالي
         if(inputVal === "إجمالي" || inputVal === "اجمالي") {
             const count = members.length;
             const total = members.reduce((acc, curr) => acc + curr.p, 0);
@@ -185,6 +202,15 @@
             return;
         }
 
+        // 2. التحقق من كتابة اسم ثنائي على الأقل (باستثناء كلمة إجمالي)
+        const nameParts = inputVal.split(/\s+/).filter(part => part.length > 0);
+        if (nameParts.length < 2) {
+            box.innerHTML = `<div class="warning-msg">⚠️ يرجى كتابة الاسم الأول والثاني (مثلاً: محمد علي) لتتم عملية البحث بدقة.</div>`;
+            box.style.display = "block";
+            return;
+        }
+
+        // 3. تطبيع النصوص للبحث (تجاهل الهمزات والتاء المربوطة)
         const normalize = (t) => t.replace(/[أإآا]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, '');
         const sNorm = normalize(inputVal);
         const found = members.find(m => normalize(m.n).includes(sNorm));
@@ -203,7 +229,11 @@
             box.style.display = "block";
         }
     }
-    document.getElementById('nameInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') doSearch(); });
+
+    // تفعيل البحث عند الضغط على زر Enter
+    document.getElementById('nameInput').addEventListener('keypress', (e) => { 
+        if (e.key === 'Enter') doSearch(); 
+    });
 </script>
 </body>
 </html>
