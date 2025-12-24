@@ -31,75 +31,30 @@
             border: 4px solid #fff;
         }
         .header-logo { width: 80px; margin-bottom: 10px; }
-
         h2 { color: #333; margin: 10px 0 5px 0; font-size: 22px; font-weight: 800; }
-        .sub-title { 
-            color: #764ba2; 
-            margin-bottom: 25px; 
-            font-size: 18px; 
-            font-weight: bold;
-            display: block; 
-        }
-        
+        .sub-title { color: #764ba2; margin-bottom: 25px; font-size: 18px; font-weight: bold; display: block; }
         .search-area { background: #f8f9fa; padding: 20px; border-radius: 20px; border: 1px solid #eee; }
-        
-        input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
-            outline: none;
-            box-sizing: border-box;
-            text-align: center;
-            font-weight: bold;
-        }
-        input:focus { border-color: #764ba2; }
-        
-        button {
-            background: var(--btn-grad);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 17px;
-            font-weight: bold;
-            width: 100%;
-            margin-top: 15px;
-            transition: 0.3s;
-        }
+        input { width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; outline: none; box-sizing: border-box; text-align: center; font-weight: bold; }
+        button { background: var(--btn-grad); color: white; border: none; padding: 14px; border-radius: 12px; cursor: pointer; font-size: 17px; font-weight: bold; width: 100%; margin-top: 15px; }
 
-        .result-box {
-            background: #fff;
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 20px;
-            display: none;
-            border: 2px solid #764ba2;
-            text-align: right;
-            animation: slideUp 0.4s ease-out;
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        .result-box { background: #fff; border-radius: 15px; padding: 20px; margin-top: 20px; display: none; border: 2px solid #764ba2; text-align: right; }
         .data-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f0f0f0; align-items: center; }
-        .label { color: #777; font-size: 14px; }
+        .label { color: #777; font-size: 14px; display: flex; align-items: center; gap: 5px; }
         .value-name { color: #2c3e50; font-weight: 900; font-size: 18px; } 
         .success { color: #27ae60; font-weight: bold; background: #ebfaef; padding: 4px 10px; border-radius: 8px; }
         .failed { color: #e74c3c; font-weight: bold; background: #fdf2f2; padding: 4px 10px; border-radius: 8px; }
-        .warning-msg { color: #856404; background: #fff3cd; padding: 15px; border-radius: 12px; font-weight: bold; border: 1px solid #ffeeba; }
+        
+        .total-header { text-align: center; color: #764ba2; font-weight: bold; border-bottom: 2px solid #eee; margin-bottom: 10px; padding-bottom: 10px; }
 
-        .designer-tag {
-            background: #eee;
-            color: #666;
+        /* التعديل المطلوب: حقوق التصميم بنفس لون زر البحث */
+        .designer-credit {
+            margin-top: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            background: var(--btn-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             display: inline-block;
-            padding: 5px 15px;
-            border-radius: 50px;
-            margin-top: 15px;
-            font-size: 11px;
         }
     </style>
 </head>
@@ -111,17 +66,16 @@
     <div class="sub-title">جمعية عيت بوعوجه </div>
 
     <div class="search-area">
-        <input type="text" id="nameInput" placeholder="ادخل اسم عضو او كلمه إجمالي ">
+        <input type="text" id="nameInput" placeholder="ادخل الاسم الأول والثاني">
         <button onclick="doSearch()">🔍 ابحث الآن</button>
     </div>
 
     <div id="result" class="result-box"></div>
-
-    <div class="designer-tag">برمجـة: عبدالمالك عطية</div>
+    
+    <div class="designer-credit">تصميم وبرمجـة: عبدالمالك عطية</div>
 </div>
 
 <script>
-    // قاعدة البيانات (نفس البيانات السابقة)
     const members = [
         {n: "جمال صالح رافالله", p: 240, d: "2025-12-18", s: "خلاص لعام 2025 و 2026 ✅", paid: true},
         {n: "ابراهيم جمعه بوحويه", p: 120, d: "2025-08-22", s: "خلاص لعام 2025 ✅", paid: true},
@@ -134,7 +88,7 @@
         {n: "بشار صلاح جبريل", p: 120, d: "2025-08-24", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "جبريل صلاح جبريل", p: 120, d: "2025-08-24", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "جبريل فرج امراجع", p: 120, d: "2025-09-01", s: "خلاص لعام 2025 ✅", paid: true},
-        {n: "جمعه بوحويه الصالحين", p: 120,d: "2025-08-22", s: "خلاص لعام 2025 ✅", paid: true},
+        {n: "جمعه بوحويه الصالحين", p: 120, d: "2025-08-22", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "حسين صلاح جبريل", p: 120, d: "2025-08-24", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "حفيظ جبريل عبدالمالك", p: 120, d: "2025-08-25", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "حفيظ محمد رافالله", p: 120, d: "2025-08-30", s: "خلاص لعام 2025 ✅", paid: true},
@@ -159,7 +113,7 @@
         {n: "عطيه جبريل عبدالمالك", p: 120, d: "2025-08-22", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "عطيه فرج امراجع", p: 120, d: "2025-10-02", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "فتاح سالم جبريل", p: 120, d: "2025-08-25", s: "خلاص لعام 2025 ✅", paid: true},
-        {n: "فرج محمد بوعوجه", p: 120, d: "2025-08-29", s: "خلاص لعام 2025 ✅", paid: true},
+        {n: "فرج محمد bبوعوجه", p: 120, d: "2025-08-29", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "كريم سالم جبريل", p: 120, d: "2025-08-25", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "محمد عبدالرازق الناجي", p: 120, d: "2025-08-31", s: "خلاص لعام 2025 ✅", paid: true},
         {n: "محمد عبدالمالك عطيه", p: 120, d: "2025-08-23", s: "خلاص لعام 2025 ✅", paid: true},
@@ -214,56 +168,42 @@
     function doSearch() {
         const inputVal = document.getElementById('nameInput').value.trim();
         const box = document.getElementById('result');
-        
-        if(!inputVal) {
-            box.style.display = "none";
-            return;
-        }
+        if(!inputVal) { box.style.display = "none"; return; }
 
-        // استثناء لكلمة إجمالي
         if(inputVal === "إجمالي" || inputVal === "اجمالي") {
-            const totalPrice = members.reduce((acc, curr) => acc + curr.p, 0);
-            box.innerHTML = `<div class="data-row"><span class="label">إجمالي الصندوق:</span><span class="value" style="color:green">${totalPrice} د.ل</span></div>`;
+            const count = members.length;
+            const total = members.reduce((acc, curr) => acc + curr.p, 0);
+            const today = new Date().toLocaleDateString('ar-LY', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            box.innerHTML = `
+                <div class="total-header">📊 تقرير حالة الصندوق</div>
+                <div class="data-row"><span class="label">👥 إجمالي المشتركين:</span><span class="value-name">${count}</span></div>
+                <div class="data-row"><span class="label">💰 إجمالي الرصيد:</span><span class="value-name" style="color:#27ae60;">${total} د.ل</span></div>
+                <div class="data-row"><span class="label">📅 تاريخ اليوم:</span><span class="value-name" style="font-size:15px; color:#555;">${today}</span></div>
+            `;
             box.style.display = "block";
             return;
         }
 
-        // التعديل المطلوب: التأكد من كتابة اسم ثنائي على الأقل
-        const nameParts = inputVal.split(/\s+/);
-        if (nameParts.length < 2) {
-            box.innerHTML = `<div class="warning-msg">⚠️ يرجى كتابة الاسم الأول والثاني (مثلاً: محمد علي) لتتم عملية البحث بدقة.</div>`;
-            box.style.display = "block";
-            return;
-        }
-
-        const normalize = (text) => text
-            .replace(/[أإآا]/g, 'ا')
-            .replace(/ة/g, 'ه')
-            .replace(/ى/g, 'ي')
-            .replace(/\s+/g, '');
-
-        const searchNorm = normalize(inputVal);
-        const found = members.find(m => normalize(m.n).includes(searchNorm));
+        const normalize = (t) => t.replace(/[أإآا]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, '');
+        const sNorm = normalize(inputVal);
+        const found = members.find(m => normalize(m.n).includes(sNorm));
 
         if(found) {
-            const statusClass = found.paid ? "success" : "failed";
+            const sClass = found.paid ? "success" : "failed";
             box.innerHTML = `
-                <div class="data-row"><span class="label">اسم العضو:</span><span class="value-name">${found.n}</span></div>
-                <div class="data-row"><span class="label">المسدد:</span><span class="value">${found.p} د.ل</span></div>
-                <div class="data-row"><span class="label">الحالة:</span><span class="${statusClass}">${found.s}</span></div>
-                <div class="data-row"><span class="label">تاريخ السداد:</span><span class="value">${found.d}</span></div>
+                <div class="data-row"><span class="label">👤 اسم العضو:</span><span class="value-name">${found.n}</span></div>
+                <div class="data-row"><span class="label">💵 المسدد:</span><span class="value-name">${found.p} د.ل</span></div>
+                <div class="data-row"><span class="label">📝 الحالة:</span><span class="${sClass}">${found.s}</span></div>
+                <div class="data-row"><span class="label">📅 التاريخ:</span><span class="value-name" style="font-size:15px;">${found.d}</span></div>
             `;
             box.style.display = "block";
         } else {
-            box.innerHTML = `<div style="color:#e74c3c; text-align:center; padding:15px; font-weight:bold;">❌ العضو غير مسجل، تأكد من كتابة الاسم بشكل صحيح.</div>`;
+            box.innerHTML = `<div style="color:#e74c3c; text-align:center; padding:15px; font-weight:bold;">❌ العضو غير مسجل</div>`;
             box.style.display = "block";
         }
     }
-
-    document.getElementById('nameInput').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') doSearch();
-    });
+    document.getElementById('nameInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') doSearch(); });
 </script>
-
 </body>
 </html>
